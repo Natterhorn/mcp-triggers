@@ -188,17 +188,7 @@
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>Dice Triggers</h1>
-        </header>
-
-        <div class="card">
-            <h2>Calculate Odds</h2>
-            
-            <div class="die-info">
-                <strong>Die Faces:</strong> Hit (2x), Blank (2x), Shield, Wild, Skull, Crit
-            </div>
-
+        <div class="card">           
             <div class="form-group">
                 <label for="numDice">Number of Dice (1-20):</label>
                 <input type="number" id="numDice" min="1" max="20" value="5">
@@ -210,6 +200,7 @@
             </div>
 
             <button onclick="calculateOdds()">Calculate Odds</button>
+            <button onclick="resetForm()" style="margin-top: 10px; background: linear-gradient(135deg, #999 0%, #666 100%); ">Reset Form</button>
             <div class="loading" id="loading">Calculating...</div>
             <div class="error" id="error"></div>
             <div class="results" id="results"></div>
@@ -294,6 +285,20 @@
             } finally {
                 loading.classList.remove('active');
             }
+        }
+
+        function resetForm() {
+            // Reset number of dice to 5
+            document.getElementById('numDice').value = 5;
+            
+            // Clear all face inputs to 0
+            document.querySelectorAll('[data-face]').forEach(input => {
+                input.value = 0;
+            });
+            
+            // Clear error and results
+            document.getElementById('error').classList.remove('show');
+            document.getElementById('results').classList.remove('show');
         }
 
         // Initialize on page load

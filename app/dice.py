@@ -2,7 +2,6 @@
 Dice simulation and odds calculation module
 """
 import random
-from itertools import combinations_with_replacement
 from collections import Counter
 
 
@@ -48,19 +47,6 @@ class OddsCalculator:
         """Initialize calculator for specific number of dice"""
         self.num_dice = num_dice
         self.total_outcomes = 8 ** num_dice
-        
-    def get_all_outcomes(self):
-        """Generate all possible outcomes for the given number of dice"""
-        faces = DiceFace.FACES
-        if self.num_dice == 1:
-            return [[face] for face in faces]
-        
-        outcomes = []
-        for combo in combinations_with_replacement(range(8), self.num_dice):
-            outcome = [faces[i] for i in combo]
-            outcomes.append(outcome)
-        
-        return outcomes
     
     def count_face_occurrences(self, outcome):
         """Count occurrences of each face in an outcome"""
