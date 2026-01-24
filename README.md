@@ -1,24 +1,6 @@
-# Dice Triggers - 8-Sided Dice Roller & Odds Calculator
+# Dice Triggers - 8-Sided Dice Odds Calculator
 
-A Python web application for simulating rolls of 8-sided dice with faces: Hit (2x), Blank (2x), Shield, Wild, Skull, and Crit. Calculate odds and probabilities for specific face combinations.
-
-## Features
-
-- **Dice Roller**: Roll 1-20 dice and see the results
-- **Odds Calculator**: Calculate exact odds for specific face combinations
-- **Face Statistics**: Get probability of rolling a specific face at least once
-- **Monte Carlo Simulation**: Run simulations to analyze outcome distributions
-- **Interactive Web UI**: Beautiful, responsive interface built with Flask and vanilla JavaScript
-
-## Die Specification
-
-Each 8-sided die has the following faces:
-- **Hit** (2 faces)
-- **Blank** (2 faces)
-- **Shield** (1 face)
-- **Wild** (1 face)
-- **Skull** (1 face)
-- **Crit** (1 face)
+A Python web application for calculating odds and probabilities of rolling 8-sided dice with faces: Hit (2x), Blank (2x), Shield, Wild, Skull, and Crit.
 
 ## Setup
 
@@ -50,32 +32,24 @@ Open your browser and navigate to `http://localhost:5000` to use the app.
 
 ## Usage
 
-### Roll Dice
-- Specify the number of dice (1-20)
-- Click "Roll Dice" to simulate the roll
-- See individual results and face counts
-
 ### Calculate Odds
-- Specify the number of dice
-- Select the target combination of faces
-- Get exact probability percentage and odds ratio
+1. Set the **Number of Dice** (1-20)
+2. Enter how many of **each face** you want to find odds for
+   - Example: 1 Hit + 2 Shield = find the probability of rolling at least 1 Hit AND at least 2 Shield
+3. Click **Calculate Odds** to get the probability percentage
+4. Use **Reset Form** to clear all inputs and start over
 
-### Face Statistics
-- Specify the number of dice
-- Select a specific face (Hit, Blank, Shield, Wild, Skull, Crit)
-- Get the probability of rolling at least one of that face
+## How It Works
 
-### Monte Carlo Simulation
-- Specify the number of dice
-- Choose the number of simulation runs (1-10000)
-- View the top 10 most common outcomes and their frequencies
+- The calculator uses Monte Carlo simulation (100,000 trials) to estimate accurate probabilities
+- Results show the probability of rolling **at least** the target face combination
+- Crit faces automatically trigger bonus die rolls (which cannot explode further)
 
 ## API Endpoints
 
-- `POST /api/roll` - Roll dice
-- `POST /api/odds` - Calculate odds for specific combinations
-- `POST /api/face-stats` - Get statistics for a specific face
-- `POST /api/simulate` - Run Monte Carlo simulation
+- `POST /api/odds` - Calculate odds for a specific target face combination
+  - Request: `{ num_dice: int, target_faces: { face: count, ... } }`
+  - Response: `{ num_dice: int, target_faces: {...}, percentage: float }`
 
 ## Project Structure
 
@@ -95,10 +69,11 @@ dice-triggers/
 
 ## Development
 
-To modify the dice faces, edit the `FACES` tuple in [app/dice.py](app/dice.py#L9).
+To modify the dice faces, edit the `FACES` tuple in [app/dice.py](app/dice.py#L11).
 
-To add new API endpoints, edit [app/routes.py](app/routes.py).
+To change how odds are calculated, modify the `calculate_odds()` method in [app/dice.py](app/dice.py#L70).
 
 ## License
 
 This project is provided as-is for educational and entertainment purposes.
+
